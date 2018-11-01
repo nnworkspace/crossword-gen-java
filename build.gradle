@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'org.ningning.codefu'
+version '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    // mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile 'com.google.guava:guava:27.0-jre'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+
+def dictPath = 'src/main/resources/german/german.dic'
+
+task runApp(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'org.ningning.codefu.crossword_gen.Runner'
+
+    // arguments to pass to the application
+    args dictPath
+}
+
+
