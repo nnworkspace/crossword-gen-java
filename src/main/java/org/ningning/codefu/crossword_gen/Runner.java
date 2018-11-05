@@ -10,7 +10,10 @@ public class Runner {
     private final static Logger LOG = Logger.getLogger(Runner.class.getName());
 
     public static void main(String[] args) {
-        long totalWords = getTotalWords(args[0]);
+        //long totalWords = getTotalWords(args[0]);
+        Board board = new Board(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+        CrosswordGenerator cg = new CrosswordGenerator(Paths.get(args[0]), board);
+        cg.generate();
     }
 
     private static long getTotalWords(String dictPath) {

@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CrosswordGenerator {
@@ -25,7 +26,15 @@ public class CrosswordGenerator {
     }
 
     public void generate() {
+        List<String> shortDict = shortenWordList();
+
         // TODO
+        // randomly pick the following specification:
+        // * horizon or vertical
+        // * start from which cell
+        // * a suitable word length
+        // check any crossing
+        // then see if it's possible to fit into the board
     }
 
     public List<String> getDict() {
@@ -45,5 +54,16 @@ public class CrosswordGenerator {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private List<String> shortenWordList() {
+
+        List<String> result = this.dict.stream()
+                .filter(word -> word.length() <= this.board.getLongestSide())
+                .collect(Collectors.toList());
+
+        LOG.info(String.format("Dictionary has %d words, shortened word list has words: %d",
+                dict.size(), result.size()));
+        return result;
     }
 }

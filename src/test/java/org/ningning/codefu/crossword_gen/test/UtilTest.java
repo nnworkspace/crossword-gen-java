@@ -1,10 +1,10 @@
 package org.ningning.codefu.crossword_gen.test;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 import org.ningning.codefu.crossword_gen.Board;
 import org.ningning.codefu.crossword_gen.Util;
 
-import static org.junit.Assert.*;
 
 public class UtilTest {
 
