@@ -15,25 +15,36 @@ public class CrosswordGenerator {
     private List<String> dict;
     private Board board;
 
+    private PlacementSpecGenerator pSpecGenerator;
+
     public CrosswordGenerator(Path dictPath, Board board) {
         this.loadDict(dictPath);
-        this.board = board;
+        this.init(board);
     }
 
     public CrosswordGenerator(List<String> dict, Board board) {
         this.dict = dict;
+        this.init(board);
+    }
+
+    private void init(Board board) {
         this.board = board;
+        this.pSpecGenerator = new PlacementSpecGenerator(board);
     }
 
     public void generate() {
         List<String> shortDict = shortenWordList();
 
-        // TODO
         // randomly pick the following specification:
         // * horizon or vertical
         // * start from which cell
         // * a suitable word length
+        PlacementSpec pSpec = pSpecGenerator.generateSpec();
+
         // check any crossing
+        WordOrientation orientation = pSpec.getOrientation();
+        // TODO
+
         // then see if it's possible to fit into the board
     }
 

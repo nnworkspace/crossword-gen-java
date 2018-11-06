@@ -1,5 +1,6 @@
 package org.ningning.codefu.crossword_gen.test;
 
+import com.google.common.base.Stopwatch;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.ningning.codefu.crossword_gen.Board;
@@ -10,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
@@ -24,12 +26,19 @@ public class CrosswordGeneratorTest {
     @BeforeAll
     public static void setUp() throws Exception {
 
+        Stopwatch stopwatch = Stopwatch.createStarted();
+
         //read file into stream, try-with-resources
         try (Stream<String> stream = Files.lines(Paths.get(dictPath))) {
             stream.forEach(line -> dict.add(line));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        stopwatch.stop();
+        LOG.info(
+                String.format("Time used for loading dictionary: %d ms.",
+                        stopwatch.elapsed(TimeUnit.MILLISECONDS)));
     }
 
 //    @Test
