@@ -45,6 +45,8 @@ public class PlacementSpecGenerator {
         }
 
         // return the placementSpec object
-        return new PlacementSpec(this.board, orientation, startPosition, wordLength);
+        PlacementSpec result = new PlacementSpec(this.board, orientation, startPosition, wordLength);
+        LOG.info("Placement spec is: " + result.toString());
+        return result;
     }
 }

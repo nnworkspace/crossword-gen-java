@@ -41,33 +41,13 @@ public class CrosswordGenerator {
         // * start from which cell
         // * a suitable word length
         PlacementSpec pSpec = pSpecGenerator.generateSpec();
-        LOG.info("Placement spec is: " + pSpec.toString());
 
         // build the holder for the new word
-        WordOrientation orientation = pSpec.getOrientation();
-        int length = pSpec.getWordLength();
-
-        char[] newWord = new char[length];
-
-        int[] startPos = pSpec.getStartPosition();
-        int startRow = startPos[0];
-        int startCol = startPos[1];
-
-        if (WordOrientation.HORIZONTAL == orientation) {
-            for (int i = 0, col = startCol ; i < newWord.length; i++, col++) {
-                newWord[i] = this.board.getChar(startRow, col);
-            }
-        } else {
-            for (int i = 0, row = startRow; i < newWord.length; i++, row++) {
-                newWord[i] = this.board.getChar(row, startCol);
-            }
-        }
-
-        LOG.info("New word holder looks like this: " + Arrays.toString(newWord));
+        char[] newWord = getNewWordHolder(pSpec);
 
         // make a pattern for string matching using the content in the new word holder
         StringBuilder regexBuilder = new StringBuilder();
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < pSpec.getWordLength(); i++) {
             if (newWord[i] == ' ') {
                 regexBuilder.append("\\w");
             } else {
@@ -124,5 +104,28 @@ public class CrosswordGenerator {
         LOG.info(String.format("Dictionary has %d words, shortened word list has words: %d",
                 dict.size(), result.size()));
         return result;
+    }
+
+    private char[] getNewWordHolder(PlacementSpec pSpec) {
+        WordOrientation orientation = pSpec.getOrientation();
+
+        char[] newWord = new char[pSpec.getWordLength()];
+
+        int[] startPos = pSpec.getStartPosition();
+        int startRow = startPos[0];
+        int startCol = startPos[1];
+
+        if (WordOrientation.HORIZONTAL == orientation) {
+            for (int i = 0, col = startCol ; i < newWord.length; i++, col++) {
+                newWord[i] = this.board.getChar(startRow, col);
+            }
+        } else {
+            for (int i = 0, row = startRow; i < newWord.length; i++, row++) {
+                newWord[i] = this.board.getChar(row, startCol);
+            }
+        }
+
+        LOG.info("New word holder looks like this: " + Arrays.toString(newWord));
+        return newWord;
     }
 }
