@@ -30,11 +30,7 @@ public class CrosswordGeneratorTest {
 
         //read file into stream, try-with-resources
         try (Stream<String> stream = Files.lines(Paths.get(dictPath))) {
-            stream.forEach(line -> {
-                if (!line.trim().contains(" ")) {
-                    dict.add(line);
-                }
-            });
+            stream.forEach(line -> dict.add(line));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -42,11 +43,13 @@ public class CrosswordGenerator {
         PlacementSpec pSpec = pSpecGenerator.generateSpec();
         LOG.info("Placement spec is: " + pSpec.toString());
 
-        // check any crossing
+        // build the holder for the new word
         WordOrientation orientation = pSpec.getOrientation();
         int length = pSpec.getWordLength();
-        int[] startPos = pSpec.getStartPosition();
+
         char[] newWord = new char[length];
+
+        int[] startPos = pSpec.getStartPosition();
         int startRow = startPos[0];
         int startCol = startPos[1];
 
@@ -59,6 +62,34 @@ public class CrosswordGenerator {
                 newWord[i] = this.board.getChar(row, startCol);
             }
         }
+
+        LOG.info("New word holder looks like this: " + Arrays.toString(newWord));
+
+        // make a pattern for string matching using the content in the new word holder
+        StringBuilder regexBuilder = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            if (newWord[i] == ' ') {
+                regexBuilder.append("\\w");
+            } else {
+                regexBuilder.append(newWord[i]);
+            }
+        }
+
+        String regex = regexBuilder.toString();
+
+        List<String> candidates = this.shortenWordList().stream().filter( word ->
+                word.matches(regex)
+        ).collect(Collectors.toList());
+
+        LOG.info("Candidates size: " + candidates.size());
+
+        if (candidates.size() > 0) {
+            LOG.info("Candidates: " + candidates.get(0) + "....");
+        }
+
+        // if there's any candidate, randomly choose a word from the candidate list
+        // place it into the board and put the whole placement onto a stack.
+
         // TODO
 
         // then see if it's possible to fit into the board
@@ -86,7 +117,8 @@ public class CrosswordGenerator {
     private List<String> shortenWordList() {
 
         List<String> result = this.dict.stream()
-                .filter(word -> word.length() <= this.board.getLongestSide())
+                .filter(word -> word.length() <= this.board.getLongestSide() && !word.contains(" "))
+                .map(String::toUpperCase)
                 .collect(Collectors.toList());
 
         LOG.info(String.format("Dictionary has %d words, shortened word list has words: %d",
