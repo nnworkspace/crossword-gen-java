@@ -1,6 +1,8 @@
 package org.ningning.codefu.crossword_gen;
 
 
+import java.util.Arrays;
+
 public class PlacementSpec {
     private WordOrientation orientation;
 
@@ -36,5 +38,15 @@ public class PlacementSpec {
 
     public Board getBoard() {
         return board;
+    }
+
+
+    @Override
+    public String toString() {
+        return "PlacementSpec{" +
+                "orientation=" + orientation +
+                ", startPosition=" + Arrays.toString(startPosition) +
+                ", wordLength=" + wordLength +
+                '}';
     }
 }

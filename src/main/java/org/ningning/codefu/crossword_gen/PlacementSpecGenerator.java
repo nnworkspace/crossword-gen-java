@@ -1,8 +1,11 @@
 package org.ningning.codefu.crossword_gen;
 
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class PlacementSpecGenerator {
+
+    private final static Logger LOG = Logger.getLogger(PlacementSpecGenerator.class.getName());
 
     private Board board;
 
@@ -11,24 +14,35 @@ public class PlacementSpecGenerator {
     }
 
     public PlacementSpec generateSpec(){
-        // get orientation
+        // set orientation
         WordOrientation orientation = WordOrientation.randomOrientation();
 
-        // get next random start position
+        // set next random start position
         Random random = new Random();
 
         int[] startPosition = new int[2];
-        startPosition[0]  = random.nextInt(board.getRows());
-        startPosition[1]  = random.nextInt(board.getCols());
+        if (orientation == WordOrientation.HORIZONTAL) {
+            // the - 1 just to guarantee the word length is at least 2
+            startPosition[0] = random.nextInt(board.getRows() - 1 - 1);
+            startPosition[1] = random.nextInt(board.getCols() - 1);
+        } else {
+            startPosition[0] = random.nextInt(board.getRows() - 1);
+            startPosition[1] = random.nextInt(board.getCols() - 1 - 1);
+        }
 
-        // get word length
+        // set word length
         int maxLength = 0;
         if (orientation == WordOrientation.HORIZONTAL) {
-            maxLength = board.getRows() - startPosition[0];
-        } else {
             maxLength = board.getCols() - startPosition[1];
+        } else {
+            maxLength = board.getRows() - startPosition[0];
         }
-        int wordLength = random.nextInt(maxLength);
+        LOG.finer("Max word length is: " + maxLength);
+
+        int wordLength = 2;
+        if (maxLength > wordLength) {
+            wordLength = random.nextInt(maxLength - 2) + 2;
+        }
 
         // return the placementSpec object
         return new PlacementSpec(this.board, orientation, startPosition, wordLength);

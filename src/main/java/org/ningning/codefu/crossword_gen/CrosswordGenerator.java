@@ -40,9 +40,25 @@ public class CrosswordGenerator {
         // * start from which cell
         // * a suitable word length
         PlacementSpec pSpec = pSpecGenerator.generateSpec();
+        LOG.info("Placement spec is: " + pSpec.toString());
 
         // check any crossing
         WordOrientation orientation = pSpec.getOrientation();
+        int length = pSpec.getWordLength();
+        int[] startPos = pSpec.getStartPosition();
+        char[] newWord = new char[length];
+        int startRow = startPos[0];
+        int startCol = startPos[1];
+
+        if (WordOrientation.HORIZONTAL == orientation) {
+            for (int i = 0, col = startCol ; i < newWord.length; i++, col++) {
+                newWord[i] = this.board.getChar(startRow, col);
+            }
+        } else {
+            for (int i = 0, row = startRow; i < newWord.length; i++, row++) {
+                newWord[i] = this.board.getChar(row, startCol);
+            }
+        }
         // TODO
 
         // then see if it's possible to fit into the board
