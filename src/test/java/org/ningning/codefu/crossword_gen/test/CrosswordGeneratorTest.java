@@ -61,7 +61,7 @@ public class CrosswordGeneratorTest {
 
         CrosswordGenerator cwGenerator = new CrosswordGenerator(dict, board);
 
-        cwGenerator.generate();
+        cwGenerator.generate(0.875, 5);
         cwGenerator.getBoard().fillEmptyCellsWithRandomChars();
 
         // TODO

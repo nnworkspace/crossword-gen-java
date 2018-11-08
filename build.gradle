@@ -31,7 +31,7 @@ task runApp(type: JavaExec) {
     main = 'org.ningning.codefu.crossword_gen.Runner'
 
     // arguments to pass to the application
-    args dictPath, 12, 12
+    args dictPath, 20, 20, 0.875, 5
 }
 
 

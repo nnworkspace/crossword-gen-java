@@ -15,6 +15,7 @@ public class CrosswordGenerator {
   private final static Logger LOG = Logger.getLogger(CrosswordGenerator.class.getName());
 
   private List<String> dict;
+  private List<String> usedWords = new ArrayList<>();
   private Board board;
   private List<PlacementContext> placementHistory = new ArrayList<>();
 
@@ -36,12 +37,11 @@ public class CrosswordGenerator {
     this.pSpecGenerator = new PlacementSpecGenerator(board);
   }
 
-  public void generate() {
+  public void generate(double density, int shortestLength) {
     List<String> shortDict = shortenWordList();
 
     int totalCells = this.board.countTotalCells();
 
-    float density = 0.75f;
 
     while (this.board.countEmptyCells() > totalCells * (1.0 - density)) {
 
@@ -49,17 +49,22 @@ public class CrosswordGenerator {
       // * horizon or vertical
       // * start from which cell
       // * a suitable word length
-      PlacementSpec pSpec = pSpecGenerator.generateSpec(5);
+      PlacementSpec pSpec = pSpecGenerator.generateSpec(shortestLength);
 
       // build the holder for the new word
       char[] newWord = board.getNewWordHolder(pSpec);
-      List<String> candidates = findCandidates(pSpec, newWord);
+
+      if (!validateNewWordHolder(newWord, shortDict)) {
+        continue;
+      }
+
+      List<String> candidates = findCandidates(pSpec, newWord, shortDict);
 
       // if there's any candidate, randomly choose a word from the candidate list
       // place it into the board and put the whole placement onto a stack.
       if (!candidates.isEmpty()) {
 
-        placeANewWord(pSpec, candidates);
+        placeANewWord(pSpec, candidates, shortDict);
 
       } else {
 
@@ -80,11 +85,11 @@ public class CrosswordGenerator {
   }
 
   public List<String> getPlacedWords() {
-    return this.placementHistory.stream().map(pContext -> pContext.getWord())
+    return this.placementHistory.stream().map(pContext -> pContext.getWord()).sorted()
         .collect(Collectors.toList());
   }
 
-  private List<String> findCandidates(PlacementSpec pSpec, char[] newWord) {
+  private List<String> findCandidates(PlacementSpec pSpec, char[] newWord, List<String> wordsPool) {
     // make a pattern for string matching using the content in the new word holder
     StringBuilder regexBuilder = new StringBuilder();
     for (int i = 0; i < pSpec.getWordLength(); i++) {
@@ -97,7 +102,7 @@ public class CrosswordGenerator {
 
     String regex = regexBuilder.toString();
 
-    List<String> candidates = this.shortenWordList().stream().filter(word ->
+    List<String> candidates = wordsPool.stream().filter(word ->
         word.matches(regex)
     ).collect(Collectors.toList());
 
@@ -109,11 +114,36 @@ public class CrosswordGenerator {
     return candidates;
   }
 
-  private void placeANewWord(PlacementSpec pSpec, List<String> candidates) {
+  private void placeANewWord(PlacementSpec pSpec, List<String> candidates, List<String> wordsPool) {
     String word = candidates.get(random.nextInt(candidates.size()));
+
+    String patternStr = "(\\w)*" + word + "(\\w)*";
+
+    if (!usedWords.isEmpty()) {
+      for (String used : usedWords) {
+        if (used.matches(patternStr)) {
+          wordsPool.remove(word);
+          this.usedWords.add(word);
+          return;
+        }
+      }
+    }
+
+    for (String used : usedWords) {
+      String pattern = "(\\w)*" + used + "(\\w)*";
+      if (word.matches(pattern)) {
+        wordsPool.remove(word);
+        this.usedWords.add(word);
+        return;
+      }
+    }
+
     board.putWord(word, pSpec);
     PlacementContext pContext = new PlacementContext(this.board, word, candidates, pSpec);
     this.placementHistory.add(pContext);
+
+    this.usedWords.add(word);
+    wordsPool.remove(word);
   }
 
   private void resetLastPlacement() {
@@ -170,5 +200,23 @@ public class CrosswordGenerator {
 //    LOG.info(String.format("Dictionary has %d words, shortened word list has words: %d",
 //        dict.size(), result.size()));
     return result;
+  }
+
+  private boolean validateNewWordHolder(char[] newWord, List<String> wordsPool) {
+    int emptyCharCount = 0;
+    for (char c : newWord) {
+      if (c == ' '){
+        emptyCharCount++;
+      }
+    }
+    if (emptyCharCount <= 2) {
+      return false;
+    }
+
+//    if (wordsPool.contains(new String(newWord))) {
+//      wordsPool.remove(newWord);
+//      return false;
+//    }
+    return true;
   }
 }

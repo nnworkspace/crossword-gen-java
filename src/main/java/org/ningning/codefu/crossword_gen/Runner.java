@@ -14,7 +14,7 @@ public class Runner {
         //long totalWords = getTotalWords(args[0]);
         Board board = new Board(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
         CrosswordGenerator cg = new CrosswordGenerator(Paths.get(args[0]), board);
-        cg.generate();
+        cg.generate(Double.parseDouble(args[3]), Integer.parseInt(args[4]));
 
         Board result = cg.getBoard();
         List<String> words = cg.getPlacedWords();

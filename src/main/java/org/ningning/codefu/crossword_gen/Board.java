@@ -59,7 +59,7 @@ public class Board {
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
         if (this.charGrid[row][col] == ' ') {
-          result ++;
+          result++;
         }
       }
     }
@@ -118,7 +118,7 @@ public class Board {
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
         if (this.charGrid[row][col] == ' ') {
-           this.charGrid[row][col] = alphabet.charAt(r.nextInt(N));
+          this.charGrid[row][col] = alphabet.charAt(r.nextInt(N));
         }
       }
     }
@@ -140,9 +140,19 @@ public class Board {
 
     for (int row = 0; row < boardView.length; row++) {
       for (int col = 0; col < boardView[row].length; col++) {
-        sb.append(boardView[row][col]);
+        char content = boardView[row][col];
+        if (content != '-') {
+          if (content == '|') {
+            sb.append(' ');
+          } else {
+            sb.append(boardView[row][col]);
+          }
+        }
       }
-      sb.append("\n");
+
+      if (row % 2 == 0) {
+        sb.append("\n");
+      }
     }
 
     return sb.toString();
