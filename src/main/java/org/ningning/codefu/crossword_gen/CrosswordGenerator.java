@@ -202,14 +202,14 @@ public class CrosswordGenerator {
     return result;
   }
 
-  private boolean validateNewWordHolder(char[] newWord, List<String> wordsPool) {
+  private boolean validateNewWordHolder(char[] newWordHolder, List<String> wordsPool) {
     int emptyCharCount = 0;
-    for (char c : newWord) {
+    for (char c : newWordHolder) {
       if (c == ' '){
         emptyCharCount++;
       }
     }
-    if (emptyCharCount <= 2) {
+    if (emptyCharCount <= 2 || emptyCharCount < newWordHolder.length * 0.5) {
       return false;
     }
 
