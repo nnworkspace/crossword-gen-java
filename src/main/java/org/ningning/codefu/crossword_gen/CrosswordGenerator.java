@@ -209,7 +209,7 @@ public class CrosswordGenerator {
         emptyCharCount++;
       }
     }
-    if (emptyCharCount <= 2 || emptyCharCount <= newWordHolder.length * 0.5) {
+    if (emptyCharCount <= 2 || emptyCharCount < newWordHolder.length * 0.5) {
       return false;
     }
 
