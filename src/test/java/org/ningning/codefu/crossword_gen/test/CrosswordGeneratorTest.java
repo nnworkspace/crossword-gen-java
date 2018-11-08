@@ -56,12 +56,13 @@ public class CrosswordGeneratorTest {
 
     @Test
     public void testGenerate() {
-        Board board = new Board(12, 12);
+        Board board = new Board(20, 20);
 
 
         CrosswordGenerator cwGenerator = new CrosswordGenerator(dict, board);
 
         cwGenerator.generate();
+        cwGenerator.getBoard().fillEmptyCellsWithRandomChars();
 
         // TODO
 

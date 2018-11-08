@@ -1,6 +1,7 @@
 package org.ningning.codefu.crossword_gen;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.logging.Logger;
 
 public class Board {
@@ -106,6 +107,21 @@ public class Board {
 
     LOG.info(String.format("################## word: %s, the board looks like this:\n, %s", word,
         this.toString()));
+  }
+
+  public void fillEmptyCellsWithRandomChars() {
+    final String alphabet = "ABCDEFGHIJKLMOPQRSTUVWXYZ";
+    final int N = alphabet.length();
+
+    Random r = new Random();
+
+    for (int row = 0; row < rows; row++) {
+      for (int col = 0; col < cols; col++) {
+        if (this.charGrid[row][col] == ' ') {
+           this.charGrid[row][col] = alphabet.charAt(r.nextInt(N));
+        }
+      }
+    }
   }
 
   public String toString() {

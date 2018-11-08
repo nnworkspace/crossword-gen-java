@@ -49,7 +49,7 @@ public class CrosswordGenerator {
       // * horizon or vertical
       // * start from which cell
       // * a suitable word length
-      PlacementSpec pSpec = pSpecGenerator.generateSpec(4);
+      PlacementSpec pSpec = pSpecGenerator.generateSpec(5);
 
       // build the holder for the new word
       char[] newWord = board.getNewWordHolder(pSpec);
@@ -167,8 +167,8 @@ public class CrosswordGenerator {
         .map(String::toUpperCase)
         .collect(Collectors.toList());
 
-    LOG.info(String.format("Dictionary has %d words, shortened word list has words: %d",
-        dict.size(), result.size()));
+//    LOG.info(String.format("Dictionary has %d words, shortened word list has words: %d",
+//        dict.size(), result.size()));
     return result;
   }
 }
