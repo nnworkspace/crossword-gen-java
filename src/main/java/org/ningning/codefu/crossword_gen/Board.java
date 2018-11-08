@@ -48,6 +48,10 @@ public class Board {
     this.charGrid[row][col] = c;
   }
 
+  public int countTotalCells() {
+    return rows * cols;
+  }
+
   public int countEmptyCells() {
     int result = 0;
 

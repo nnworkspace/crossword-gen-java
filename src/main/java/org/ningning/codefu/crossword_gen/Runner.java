@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class Runner {
@@ -14,6 +15,14 @@ public class Runner {
         Board board = new Board(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
         CrosswordGenerator cg = new CrosswordGenerator(Paths.get(args[0]), board);
         cg.generate();
+
+        Board result = cg.getBoard();
+        List<String> words = cg.getPlacedWords();
+
+        System.out.println("================================================");
+
+        System.out.println(result);
+        System.out.println(words);
     }
 
     private static long getTotalWords(String dictPath) {

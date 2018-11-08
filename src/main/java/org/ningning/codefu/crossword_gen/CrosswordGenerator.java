@@ -39,7 +39,11 @@ public class CrosswordGenerator {
   public void generate() {
     List<String> shortDict = shortenWordList();
 
-    while (this.board.countEmptyCells() > 16) {
+    int totalCells = this.board.countTotalCells();
+
+    float density = 0.75f;
+
+    while (this.board.countEmptyCells() > totalCells * (1.0 - density)) {
 
       // randomly pick the following specification:
       // * horizon or vertical
@@ -73,6 +77,11 @@ public class CrosswordGenerator {
 
   public Board getBoard() {
     return this.board;
+  }
+
+  public List<String> getPlacedWords() {
+    return this.placementHistory.stream().map(pContext -> pContext.getWord())
+        .collect(Collectors.toList());
   }
 
   private List<String> findCandidates(PlacementSpec pSpec, char[] newWord) {
@@ -127,7 +136,8 @@ public class CrosswordGenerator {
         String word = previousCandidates.get(random.nextInt(previousCandidates.size() - 1));
         previousCandidates.remove(previousContext.getWord());
         prevPrevBoard.putWord(word, lastSpec);
-        PlacementContext newContext = new PlacementContext(prevPrevBoard, word, previousCandidates, lastSpec);
+        PlacementContext newContext = new PlacementContext(prevPrevBoard, word, previousCandidates,
+            lastSpec);
         this.placementHistory.remove(placementHistory.size() - 1);
         this.placementHistory.add(newContext);
         return;
@@ -161,5 +171,4 @@ public class CrosswordGenerator {
         dict.size(), result.size()));
     return result;
   }
-
 }

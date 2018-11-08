@@ -1,5 +1,6 @@
 package org.ningning.codefu.crossword_gen;
 
+import com.google.common.base.Preconditions;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -14,6 +15,9 @@ public class PlacementSpecGenerator {
     }
 
     public PlacementSpec generateSpec(int shortestLength){
+
+        Preconditions.checkArgument(shortestLength <= Math.min(board.getRows(), board.getCols()));
+
         // set orientation
         WordOrientation orientation = WordOrientation.randomOrientation();
 
