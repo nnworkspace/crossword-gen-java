@@ -58,6 +58,7 @@ public class CrosswordGeneratorTest {
     public void testGenerate() {
         Board board = new Board(8, 8);
 
+
         CrosswordGenerator cwGenerator = new CrosswordGenerator(dict, board);
 
         cwGenerator.generate();
