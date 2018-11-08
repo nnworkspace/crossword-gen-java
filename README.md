@@ -17,56 +17,54 @@ Output of a test with a board 20 * 20, density 0.75, shortest length of 5, looks
 ================================================
 Shape of this board is 20 rows X 20 cols
 -----------------------------------------
-|O|I|A|O|O|G|L|I|E|B|E|V|O|L|L|E|M|G|O|L|
+|S|E|H|A|U|T|S|E|G|M|E|N|T|G|E|I|Z|T|E|N|
 -----------------------------------------
-|D|E|N|U|G|A|T|T|S|A|F|O|T|Z|E|S|W|S|E|J|
+|T|R|A|C|H|T|A|A|H|N|D|U|N|G|E|B|A|D|E|S|
 -----------------------------------------
-|W|W|T|X|Q|S|P|A|R|D|R|U|C|K|S|E|R|D|Z|G|
+|A|Y|Y|C|P|A|T|R|A|S|U|O|Z|R|T|K|L|B|A|R|
 -----------------------------------------
-|C|S|U|T|K|K|A|D|E|W|E|L|L|B|A|L|G|S|E|P|
+|B|B|P|K|A|I|S|E|R|C|H|R|O|N|I|K|K|M|L|R|
 -----------------------------------------
-|O|T|E|H|E|R|A|U|F|Z|U|B|E|G|E|B|E|N|D|E|
+|I|F|O|R|M|S|T|O|M|K|O|S|T|E|N|P|L|A|T|Z|
 -----------------------------------------
-|A|A|T|I|S|I|H|P|F|A|R|R|M|E|S|S|E|N|X|O|
+|L|I|E|D|T|A|N|E|K|E|L|N|V|M|O|R|A|K|L|E|
 -----------------------------------------
-|U|T|P|N|U|E|A|E|O|S|C|H|I|W|O|T|T|A|W|A|
+|O|F|L|B|I|B|M|B|E|H|A|V|I|O|R|I|S|T|A|T|
 -----------------------------------------
-|P|U|F|K|R|G|C|M|Y|U|T|F|G|A|R|R|Y|M|E|M|
+|B|F|E|S|E|E|P|A|T|E|N|T|T|V|S|T|A|U|N|E|
 -----------------------------------------
-|I|S|Q|U|I|E|K|T|E|T|O|T|R|E|D|E|M|F|G|E|
+|E|D|N|Z|Z|T|R|R|T|Y|P|R|A|N|G|S|T|A|D|G|
 -----------------------------------------
-|B|K|A|N|E|S|G|A|R|E|M|Y|A|L|G|I|S|C|H|E|
+|N|M|D|I|I|O|O|C|E|O|H|G|M|A|R|C|E|L|S|Q|
 -----------------------------------------
-|Z|A|U|F|L|A|U|F|E|L|E|M|N|E|U|N|E|N|E|T|
+|H|R|O|K|U|N|P|H|T|H|I|S|I|S|S|H|X|I|G|T|
 -----------------------------------------
-|U|N|D|T|S|M|T|R|A|N|S|I|T|B|R|I|E|F|I|E|
+|I|U|E|R|W|R|F|I|N|A|N|Z|N|O|T|E|N|S|E|U|
 -----------------------------------------
-|G|A|I|W|V|T|P|T|Z|R|S|A|E|A|L|G|S|A|R|O|
+|N|D|E|Z|T|E|M|V|P|V|G|L|E|N|N|L|A|T|K|I|
 -----------------------------------------
-|L|L|O|S|A|O|E|F|C|G|R|U|N|D|B|E|T|R|A|G|
+|D|I|L|L|U|S|I|O|N|S|T|E|N|D|E|N|Z|I|R|V|
 -----------------------------------------
-|A|S|B|S|L|P|L|A|N|S|A|T|Z|E|S|N|R|Q|T|Y|
+|E|S|S|V|M|T|R|R|M|W|U|N|D|E|K|D|I|S|E|H|
 -----------------------------------------
-|S|B|L|T|E|T|C|B|Q|P|D|E|E|T|E|D|A|M|E|R|
+|R|F|A|I|W|E|C|H|O|Z|U|G|S|N|O|E|S|C|P|A|
 -----------------------------------------
-|T|A|O|J|N|I|H|E|J|E|S|S|I|E|S|E|H|E|N|D|
+|S|A|S|P|A|N|B|U|F|F|E|T|S|D|R|M|K|H|P|L|
 -----------------------------------------
-|E|L|G|O|C|K|E|L|C|R|X|T|T|T|I|R|L|W|F|B|
+|T|H|S|E|N|P|O|B|E|R|F|E|L|L|S|O|B|E|T|L|
 -----------------------------------------
-|N|D|S|F|I|L|E|T|B|R|A|T|E|N|S|D|E|Z|K|Q|
+|U|A|E|R|D|B|E|R|G|U|N|G|Y|S|O|S|L|M|E|R|
 -----------------------------------------
-|D|Q|S|B|A|F|T|I|W|E|F|R|N|D|D|G|X|Q|Z|H|
+|X|N|S|N|S|S|D|E|J|X|S|B|F|M|J|J|H|A|N|L|
 -----------------------------------------
 
-[MYALGISCHE, FILETBRATENS, SELBSTREINIGENDER, GOCKEL, GESAMTOPTIK, AUFLAUFE,
- FOTZE, QUIEKTET, PFARRMESSEN, EDAMER, EMIGRANTENZEITEN, GRUNDBETRAG, 
- LIEBEVOLLEM, HERAUFZUBEGEBEN, STRAHLE, WEGHEIRATEN, FABELT, SPARDRUCKS, 
- WELLBALGS, HACKGUT, KADEWE, HINKUNFT, TRANSITBRIEF, SEHEND, PLANSATZES, 
- FOYER, OSCHI, STATUSKANAL, MYALGISCH, BADETET, VALENCIA, URIELS, SPERR, 
- GEBENDE, ZEITEN, GATTS, TOTREDE, ZUGLASTEN, ZEITEN, GARRY, GEBENDE, NEUNE, 
- NEUNEN, ELCHE, MESSRAD, LASTEND, GASKRIEG, MIAUTEST, OTTAWA, LEMGO, ANTUE, 
- ALSBALD, SPERRE, RUCKS, GAREM, JESSIE, AUDIOBLOGS]
-
+[OBERFELLS, VITAMINEN, BERGUNG, ORAKLE, ILLUSIONSTENDENZ, VIPERN, BEHAVIORIST, 
+FORMST, FINANZNOTEN, KAISERCHRONIK, HINDERST, AKTUALISTISCHEM, RUDIS, ISFAHAN, 
+OBENHIN, PRITSCHELNDEM, MARCELS, VORHUB, HAUTSEGMENT, ELSASSES, KORSO, ARMKETTE, 
+BETONRESTEN, ALTLAND, ARCHIV, PATRAS, WUNDE, SEEPATENT, SCHEMA, HINGT, 
+GEKREPPTEN, GLENN, PRANGST, UMWAND, TRACHT, ENGTE, STAUNE, WUNDE, DEMOS, SONDEN, 
+GEIZTEN, ECHOZUGS, EKELN, AHNDUNG, SEGMENT, PHTHISIS, ANEKELN, AMINEN, ELEND, 
+KOSTENPLATZ, STABILO, EXNAZIS, ISFAHAN, BUFFETS]
 ```
 
 The German dictionary is downloaded from:
