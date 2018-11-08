@@ -48,6 +48,20 @@ public class Board {
     this.charGrid[row][col] = c;
   }
 
+  public int countEmptyCells() {
+    int result = 0;
+
+    for (int row = 0; row < rows; row++) {
+      for (int col = 0; col < cols; col++) {
+        if (this.charGrid[row][col] == ' ') {
+          result ++;
+        }
+      }
+    }
+
+    return result;
+  }
+
   public char[] getNewWordHolder(PlacementSpec pSpec) {
     WordOrientation orientation = pSpec.getOrientation();
 

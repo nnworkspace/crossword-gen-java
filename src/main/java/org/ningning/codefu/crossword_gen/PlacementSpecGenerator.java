@@ -13,7 +13,7 @@ public class PlacementSpecGenerator {
         this.board = board;
     }
 
-    public PlacementSpec generateSpec(){
+    public PlacementSpec generateSpec(int shortestLength){
         // set orientation
         WordOrientation orientation = WordOrientation.randomOrientation();
 
@@ -22,26 +22,25 @@ public class PlacementSpecGenerator {
 
         int[] startPosition = new int[2];
         if (orientation == WordOrientation.HORIZONTAL) {
-            // the - 1 just to guarantee the word length is at least 2
-            startPosition[0] = random.nextInt(board.getRows() - 1 - 1);
-            startPosition[1] = random.nextInt(board.getCols() - 1);
-        } else {
             startPosition[0] = random.nextInt(board.getRows() - 1);
-            startPosition[1] = random.nextInt(board.getCols() - 1 - 1);
+            startPosition[1] = random.nextInt(board.getCols() - shortestLength);
+        } else {
+            startPosition[0] = random.nextInt(board.getRows() - shortestLength);
+            startPosition[1] = random.nextInt(board.getCols() - 1);
         }
 
         // set word length
         int maxLength = 0;
         if (orientation == WordOrientation.HORIZONTAL) {
-            maxLength = board.getCols() - startPosition[1];
+            maxLength = board.getCols() - startPosition[1] + 1;
         } else {
-            maxLength = board.getRows() - startPosition[0];
+            maxLength = board.getRows() - startPosition[0] + 1;
         }
         LOG.finer("Max word length is: " + maxLength);
 
-        int wordLength = 2;
+        int wordLength = shortestLength;
         if (maxLength > wordLength) {
-            wordLength = random.nextInt(maxLength - 2) + 2;
+            wordLength = random.nextInt(maxLength - shortestLength) + shortestLength;
         }
 
         // return the placementSpec object

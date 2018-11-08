@@ -39,59 +39,29 @@ public class CrosswordGenerator {
   public void generate() {
     List<String> shortDict = shortenWordList();
 
-    // TODO temporary condition, modify the condition flag later
-    int iter = 0;
-
-    while (iter < 8) {
+    while (this.board.countEmptyCells() > 16) {
 
       // randomly pick the following specification:
       // * horizon or vertical
       // * start from which cell
       // * a suitable word length
-      PlacementSpec pSpec = pSpecGenerator.generateSpec();
+      PlacementSpec pSpec = pSpecGenerator.generateSpec(4);
 
       // build the holder for the new word
       char[] newWord = board.getNewWordHolder(pSpec);
-
-      // make a pattern for string matching using the content in the new word holder
-      StringBuilder regexBuilder = new StringBuilder();
-      for (int i = 0; i < pSpec.getWordLength(); i++) {
-        if (newWord[i] == ' ') {
-          regexBuilder.append("\\w");
-        } else {
-          regexBuilder.append(newWord[i]);
-        }
-      }
-
-      String regex = regexBuilder.toString();
-
-      List<String> candidates = this.shortenWordList().stream().filter(word ->
-          word.matches(regex)
-      ).collect(Collectors.toList());
-
-      LOG.info("Candidates size: " + candidates.size());
-
-      if (!candidates.isEmpty()) {
-        LOG.info("Candidates: " + candidates.get(0) + "....");
-      }
+      List<String> candidates = findCandidates(pSpec, newWord);
 
       // if there's any candidate, randomly choose a word from the candidate list
       // place it into the board and put the whole placement onto a stack.
-      if (candidates.size() > 1) {
-        String word = candidates.get(random.nextInt(candidates.size() - 1));
-        board.putWord(word, pSpec);
-        PlacementContext pContext = new PlacementContext(this.board, word, candidates, pSpec);
-        this.placementHistory.add(pContext);
-      } else {
-        if (!this.placementHistory.isEmpty()) {
-          PlacementContext previousContext = this.placementHistory.get(placementHistory.size() - 1);
-          // TODO
-        } else {
-          // TODO
-        }
-      }
+      if (!candidates.isEmpty()) {
 
-      iter++;
+        placeANewWord(pSpec, candidates);
+
+      } else {
+
+        continue;
+        //resetLastPlacement();
+      }
 
       // TODO
     }
@@ -103,6 +73,70 @@ public class CrosswordGenerator {
 
   public Board getBoard() {
     return this.board;
+  }
+
+  private List<String> findCandidates(PlacementSpec pSpec, char[] newWord) {
+    // make a pattern for string matching using the content in the new word holder
+    StringBuilder regexBuilder = new StringBuilder();
+    for (int i = 0; i < pSpec.getWordLength(); i++) {
+      if (newWord[i] == ' ') {
+        regexBuilder.append("\\w");
+      } else {
+        regexBuilder.append(newWord[i]);
+      }
+    }
+
+    String regex = regexBuilder.toString();
+
+    List<String> candidates = this.shortenWordList().stream().filter(word ->
+        word.matches(regex)
+    ).collect(Collectors.toList());
+
+    LOG.info("Candidates size: " + candidates.size());
+
+    if (!candidates.isEmpty()) {
+      LOG.info("Candidates: " + candidates.get(0) + "....");
+    }
+    return candidates;
+  }
+
+  private void placeANewWord(PlacementSpec pSpec, List<String> candidates) {
+    String word = candidates.get(random.nextInt(candidates.size()));
+    board.putWord(word, pSpec);
+    PlacementContext pContext = new PlacementContext(this.board, word, candidates, pSpec);
+    this.placementHistory.add(pContext);
+  }
+
+  private void resetLastPlacement() {
+    if (!this.placementHistory.isEmpty()) {
+      PlacementContext previousContext = this.placementHistory.get(placementHistory.size() - 1);
+
+      List<String> previousCandidates = previousContext.getCandidates();
+      previousCandidates.remove(previousContext.getWord());
+
+      if (previousCandidates.isEmpty()) {
+        // in this case, previous placement will be removed from the history
+        this.placementHistory.remove(previousContext);
+        return;
+
+      } else {
+
+        Board prevPrevBoard = this.placementHistory.get(placementHistory.size() - 2).getBoard();
+        // use the previous placement specification
+        PlacementSpec lastSpec = previousContext.getPlacementSpec();
+        String word = previousCandidates.get(random.nextInt(previousCandidates.size() - 1));
+        previousCandidates.remove(previousContext.getWord());
+        prevPrevBoard.putWord(word, lastSpec);
+        PlacementContext newContext = new PlacementContext(prevPrevBoard, word, previousCandidates, lastSpec);
+        this.placementHistory.remove(placementHistory.size() - 1);
+        this.placementHistory.add(newContext);
+        return;
+      }
+
+    } else {
+      // an edge case that is not likely to happen
+      // TODO
+    }
   }
 
   private void loadDict(Path dictPath) {
