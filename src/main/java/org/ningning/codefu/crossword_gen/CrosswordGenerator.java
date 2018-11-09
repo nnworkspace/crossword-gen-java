@@ -19,6 +19,8 @@ public class CrosswordGenerator {
   private Board board;
   private List<PlacementContext> placementHistory = new ArrayList<>();
 
+  private int[] wordLengthCounts = new int[100];
+
   private PlacementSpecGenerator pSpecGenerator;
   private Random random = new Random();
 
@@ -34,14 +36,30 @@ public class CrosswordGenerator {
 
   private void init(Board board) {
     this.board = board;
-    this.pSpecGenerator = new PlacementSpecGenerator(board);
+
+    // 1. filter out words with space
+    // 2. count occurrences of each word's length
+    this.dict = this.dict.stream()
+        .filter(word -> !word.contains(" "))
+        .map(String::toUpperCase)
+        .collect(Collectors.toList());
+
+    this.dict.stream().forEach(word -> this.wordLengthCounts[word.length()]++);
+
+    StringBuilder sb = new StringBuilder("[");
+    for (int i = 0; i < wordLengthCounts.length; i++) {
+      sb.append("[").append(i).append(", ").append(this.wordLengthCounts[i]).append("], ");
+    }
+    sb.append("]");
+    LOG.info("Lengths of words occurrences: " + sb.toString());
+
+    this.pSpecGenerator = new PlacementSpecGenerator(this.board, this.wordLengthCounts);
   }
 
   public void generate(double density, int shortestLength) {
     List<String> shortDict = shortenWordList();
 
     int totalCells = this.board.countTotalCells();
-
 
     while (this.board.countEmptyCells() > totalCells * (1.0 - density)) {
 
@@ -82,6 +100,10 @@ public class CrosswordGenerator {
 
   public Board getBoard() {
     return this.board;
+  }
+
+  public int[] getWordLengthCounts() {
+    return wordLengthCounts;
   }
 
   public List<String> getPlacedWords() {
@@ -193,8 +215,7 @@ public class CrosswordGenerator {
   private List<String> shortenWordList() {
 
     List<String> result = this.dict.stream()
-        .filter(word -> word.length() <= this.board.getLongestSide() && !word.contains(" "))
-        .map(String::toUpperCase)
+        .filter(word -> word.length() <= this.board.getLongestSide())
         .collect(Collectors.toList());
 
 //    LOG.info(String.format("Dictionary has %d words, shortened word list has words: %d",
@@ -205,7 +226,7 @@ public class CrosswordGenerator {
   private boolean validateNewWordHolder(char[] newWordHolder, List<String> wordsPool) {
     int emptyCharCount = 0;
     for (char c : newWordHolder) {
-      if (c == ' '){
+      if (c == ' ') {
         emptyCharCount++;
       }
     }

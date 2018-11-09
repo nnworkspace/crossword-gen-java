@@ -41,18 +41,18 @@ public class CrosswordGeneratorTest {
                         stopwatch.elapsed(TimeUnit.MILLISECONDS)));
     }
 
-//    @Test
-//    public void testConstructor() {
-//        Board board = new Board(8, 8);
-//
-//        CrosswordGenerator cwGenerator = new CrosswordGenerator(dict, board);
-//
-//        cwGenerator.getDict().stream().limit(10).forEach( word ->
-//                System.out.println(word)
-//        );
-//
-//        // LOG.info();
-//    }
+    @Test
+    public void testConstructor() {
+        Board board = new Board(8, 8);
+
+        CrosswordGenerator cwGenerator = new CrosswordGenerator(dict, board);
+
+        cwGenerator.getDict().stream().limit(10).forEach( word ->
+                System.out.println(word)
+        );
+
+        // LOG.info();
+    }
 
     @Test
     public void testGenerate() {
