@@ -5,7 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.TreeMap;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,6 +20,7 @@ public class CrosswordGenerator {
   private List<String> usedWords = new ArrayList<>();
   private Board board;
   private List<PlacementContext> placementHistory = new ArrayList<>();
+  private PuzzleAndSolution puzzleAndSolution;
 
   private int[] wordLengthCounts = new int[100];
 
@@ -85,12 +88,18 @@ public class CrosswordGenerator {
         placeANewWord(pSpec, candidates, shortDict);
 
       } else {
-
+        // TODO
         continue;
         //resetLastPlacement();
       }
 
-      // TODO
+      // build the puzzleAndSolution object
+      Map<String, PlacementSpec> solutionMap = new TreeMap<>();
+      this.placementHistory.forEach( placementContext -> {
+        solutionMap.put(placementContext.getWord(), placementContext.getPlacementSpec());
+      });
+
+      this.puzzleAndSolution = new PuzzleAndSolution(this.board.getCharGrid(), solutionMap);
     }
   }
 
@@ -109,6 +118,10 @@ public class CrosswordGenerator {
   public List<String> getPlacedWords() {
     return this.placementHistory.stream().map(pContext -> pContext.getWord()).sorted()
         .collect(Collectors.toList());
+  }
+
+  public PuzzleAndSolution getPuzzleAndSolution() {
+    return puzzleAndSolution;
   }
 
   private List<String> findCandidates(PlacementSpec pSpec, char[] newWord, List<String> wordsPool) {
@@ -234,10 +247,6 @@ public class CrosswordGenerator {
       return false;
     }
 
-//    if (wordsPool.contains(new String(newWord))) {
-//      wordsPool.remove(newWord);
-//      return false;
-//    }
     return true;
   }
 }

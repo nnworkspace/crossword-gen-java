@@ -56,7 +56,7 @@ public class CrosswordGeneratorTest {
 
     @Test
     public void testGenerate() {
-        Board board = new Board(20, 20);
+        Board board = new Board(12, 12);
 
 
         CrosswordGenerator cwGenerator = new CrosswordGenerator(dict, board);
@@ -77,5 +77,7 @@ public class CrosswordGeneratorTest {
 
         System.out.println(result);
         System.out.println(words);
+
+        System.out.println(cwGenerator.getPuzzleAndSolution());
     }
 }
