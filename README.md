@@ -5,7 +5,7 @@ density of the filling of the board, and the shortest length of words to be used
 
 Not completely implemented yet.....
 
-Usage:
+## Usage:
 ```
 gradlew runApp
 ```
